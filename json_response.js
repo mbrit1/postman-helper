@@ -22,3 +22,12 @@ pm.test("key is included", () => {
 pm.test("key is an array", () => {
     pm.expect(pm.response.json().value).to.be.an("array");
 });
+
+// requested values are in an array
+pm.test("requested value(s) are included",  () => {
+    const values = pm.response.json().key;
+    // key field should be an array
+    pm.expect(key).to.be.an('array');
+    // check if each value which was defined in an env variable is in the returned key
+    pm.expect(pm.environment.get("someArray").some(r=> key.includes(r)));
+});
